@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #5ba88f;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #409EFF;
+}
+
+ul, ol {
+  list-style: none;
+}
