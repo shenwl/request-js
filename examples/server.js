@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
 
 const router = express.Router()
 
-Router.get('/simple/get', (req, res) => {
+router.get('/simple/get', (req, res) => {
   res.json({
     msg: 'simple server'
   })
