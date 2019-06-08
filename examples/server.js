@@ -37,6 +37,21 @@ router.get('/params/get', (req, res) => {
   res.json(req.query)
 })
 
+router.post('/body/post', (req, res) => {
+  res.json(req.body)
+})
+
+router.post('/buffer/post', (req, res) => {
+  let msg = []
+  req.on('data', chunk => {
+    chunk && msg.push(chunk)
+  })
+  req.on('end', () => {
+    let buf = Buffer.concat(msg)
+    res.json(buf.toJSON)
+  })
+})
+
 app.use(router)
 
 const port = process.env.PORT || 3000
