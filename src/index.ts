@@ -1,6 +1,7 @@
 import { RequestConfig } from './types'
 import { buildURL } from './tools/url'
 import { transformRequest } from './tools/data'
+import { processHeaders } from './tools/headers'
 import xhr from './xhr'
 
 function request(config: RequestConfig | string) {
@@ -15,6 +16,7 @@ function request(config: RequestConfig | string) {
 function processConfig(config: RequestConfig): RequestConfig {
   const requestConfig = { ...config }
   requestConfig.url = transformURL(requestConfig)
+  requestConfig.headers = transformHeaders(requestConfig)
   requestConfig.data = transformRequestData(requestConfig)
   return requestConfig
 }
@@ -27,6 +29,10 @@ function transformURL(config: RequestConfig): string {
 function transformRequestData(config: RequestConfig): any {
   const { data } = config
   return transformRequest(data)
+}
+function transformHeaders(config: RequestConfig): any {
+  const { data, headers = {} } = config
+  return processHeaders(headers, data)
 }
 
 export default request
