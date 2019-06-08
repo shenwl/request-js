@@ -38,7 +38,7 @@ export const buildURL = (url: string, params?: any): string => {
       } else if (isObject(val)) {
         val = JSON.stringify(val)
       }
-      parts.push(encode(`${key}=${val}`))
+      parts.push(`${encode(key)}=${encode(val)}`)
     })
   })
   let serializedParams = parts.join('&')
