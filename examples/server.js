@@ -33,6 +33,10 @@ router.get('/simple/get', (req, res) => {
   })
 })
 
+router.get('/params/get', (req, res) => {
+  res.json(req.query)
+})
+
 app.use(router)
 
 const port = process.env.PORT || 3000

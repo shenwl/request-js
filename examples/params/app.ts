@@ -1,16 +1,14 @@
 import request from '../../src/index'
 
-request('/simple/get')
-
 request({
-  url: '/simple/get',
+  url: '/params/get',
   params: {
-    foo: ['bar', 'baz']  
+    foo: ['bar', 'baz']
   }
 })
 
 request({
-  url: '/simple/get',
+  url: '/params/get',
   params: {
     foo: {
       bar: 'bar',
@@ -20,7 +18,7 @@ request({
 })
 
 request({
-  url: '/simple/get',
+  url: '/params/get',
   params: {
     date: new Date()
   }
