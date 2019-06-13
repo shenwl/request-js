@@ -32,7 +32,4 @@ export interface Response {
   request: any
 }
 
-export interface RequestPromise extends Promise<Response> {
-
-}
-
+export interface RequestPromise extends Promise<Response> {}
