@@ -1,15 +1,15 @@
-import { RequestConfig } from './types'
+import { RequestConfig, RequestPromise } from './types'
 import { buildURL } from './tools/url'
 import { transformRequest } from './tools/data'
 import { processHeaders } from './tools/headers'
 import xhr from './xhr'
 
-function request(config: RequestConfig | string) {
+function request(config: RequestConfig | string): RequestPromise {
   if (typeof config === 'string') {
-    xhr({ url: config })
+    return xhr({ url: config })
   } else {
     const requestConfig = processConfig(config)
-    xhr(requestConfig)
+    return xhr(requestConfig)
   }
 }
 
