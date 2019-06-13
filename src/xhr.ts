@@ -1,4 +1,5 @@
 import { RequestPromise, RequestConfig, Response } from './types'
+import { parseHeaders } from './tools/headers'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
@@ -27,9 +28,9 @@ export default (config: RequestConfig): RequestPromise => {
         data: responseData,
         status: xhr.status,
         statusText: xhr.statusText,
-        headers: responseHeaders,
+        headers: parseHeaders(responseHeaders),
         config,
-        request: xhr,
+        request: xhr
       }
       resolve(response)
     }
