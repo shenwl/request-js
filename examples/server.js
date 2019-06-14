@@ -52,6 +52,25 @@ router.post('/buffer/post', (req, res) => {
   })
 })
 
+router.get('/error/get', (req, res) => {
+  if(Math.random() > 0.5) {
+    res.json({
+      msg: 'lucky'
+    })
+  } else {
+    res.status(500)
+    res.end()
+  }
+})
+
+router.get('/error/timeout', (req, res) => {
+  setTimeout(() => {
+    res.json({
+      msg: 'test timeout'
+    })
+  }, 3600)
+})
+
 app.use(router)
 
 const port = process.env.PORT || 3000
