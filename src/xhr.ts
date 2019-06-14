@@ -1,6 +1,5 @@
 import { RequestPromise, RequestConfig, Response } from './types'
 import { parseHeaders } from './tools/headers'
-import { resolve } from 'dns'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
@@ -55,7 +54,7 @@ export default (config: RequestConfig): RequestPromise => {
     function handleResponse(response: Response): void {
       const { status } = response
       if (status >= 200 && status < 300) {
-        resolve()
+        resolve(response)
       } else {
         reject(new Error(`Request failed with status code ${status}`))
       }
