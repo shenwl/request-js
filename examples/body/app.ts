@@ -14,6 +14,9 @@ request({
   method: 'POST',
   data: {
     buf: new Int32Array([1, 0, 31, 23]),
+  },
+  headers: {
+    'Content-Type': 'application/octet-stream'
   }
 })
 
