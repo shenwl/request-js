@@ -3,41 +3,49 @@ import { parseHeaders } from './tools/headers'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers = {}, responseType } = config
+    const { data = null, url, method = 'get', headers = {}, responseType, timeout } = config
 
-    const xhr = new XMLHttpRequest()
+    const request = new XMLHttpRequest()
 
     if (responseType) {
-      xhr.responseType = responseType
+      request.responseType = responseType
     }
 
-    xhr.open(method.toUpperCase(), url, true)
+    if (timeout) {
+      request.timeout = timeout
+    }
+
+    request.open(method.toUpperCase(), url, true)
     Object.entries(headers).forEach(([name, value]) => {
       if (data === null && name.toLowerCase() === 'content-type') {
         delete headers[name]
       }
-      typeof value === 'string' && xhr.setRequestHeader(name, value)
+      typeof value === 'string' && request.setRequestHeader(name, value)
     })
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState !== 4) {
+    request.onreadystatechange = () => {
+      if (request.readyState !== 4) {
         return
       }
-      const responseHeaders = xhr.getAllResponseHeaders()
-      const responseData = responseType !== 'text' ? xhr.response : xhr.responseText
+      const responseHeaders = request.getAllResponseHeaders()
+      const responseData = responseType !== 'text' ? request.response : request.responseText
       const response: Response = {
         data: responseData,
-        status: xhr.status,
-        statusText: xhr.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: parseHeaders(responseHeaders),
         config,
-        request: xhr
+        request: request
       }
       resolve(response)
     }
     // handle network error
-    xhr.onerror = () => {
+    request.onerror = () => {
       reject(new Error('Network Error'))
     }
-    xhr.send(data)
+    // handle timeout error
+    request.ontimeout = () => {
+      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+    }
+    request.send(data)
   })
 }
