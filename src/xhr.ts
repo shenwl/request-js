@@ -34,6 +34,10 @@ export default (config: RequestConfig): RequestPromise => {
       }
       resolve(response)
     }
+    // handle network error
+    xhr.onerror = () => {
+      reject(new Error('Network Error'))
+    }
     xhr.send(data)
   })
 }
