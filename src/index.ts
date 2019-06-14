@@ -1,6 +1,6 @@
-import { RequestConfig, RequestPromise } from './types'
+import { RequestConfig, RequestPromise, Response } from './types'
 import { buildURL } from './tools/url'
-import { transformRequest } from './tools/data'
+import { transformRequest, transformResponse } from './tools/data'
 import { processHeaders } from './tools/headers'
 import xhr from './xhr'
 
@@ -9,7 +9,10 @@ function request(config: RequestConfig | string): RequestPromise {
     return xhr({ url: config })
   } else {
     const requestConfig = processConfig(config)
-    return xhr(requestConfig)
+    return xhr(requestConfig).then(res => {
+      res.data = transformResponseData(res)
+      return res
+    })
   }
 }
 
@@ -30,6 +33,12 @@ function transformRequestData(config: RequestConfig): any {
   const { data } = config
   return transformRequest(data)
 }
+
+function transformResponseData(res: Response): any {
+  const { data } = res
+  return transformResponse(data)
+}
+
 function transformHeaders(config: RequestConfig): any {
   const { data, headers = {} } = config
   return processHeaders(headers, data)
