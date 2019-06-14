@@ -1,5 +1,6 @@
 import { RequestPromise, RequestConfig, Response } from './types'
 import { parseHeaders } from './tools/headers'
+import { resolve } from 'dns'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
@@ -26,6 +27,9 @@ export default (config: RequestConfig): RequestPromise => {
       if (request.readyState !== 4) {
         return
       }
+      if (request.status === 0) {
+        return
+      }
       const responseHeaders = request.getAllResponseHeaders()
       const responseData = responseType !== 'text' ? request.response : request.responseText
       const response: Response = {
@@ -36,7 +40,7 @@ export default (config: RequestConfig): RequestPromise => {
         config,
         request: request
       }
-      resolve(response)
+      handleResponse(response)
     }
     // handle network error
     request.onerror = () => {
@@ -47,5 +51,14 @@ export default (config: RequestConfig): RequestPromise => {
       reject(new Error(`Timeout of ${timeout} ms exceeded`))
     }
     request.send(data)
+
+    function handleResponse(response: Response): void {
+      const { status } = response
+      if (status >= 200 && status < 300) {
+        resolve()
+      } else {
+        reject(new Error(`Request failed with status code ${status}`))
+      }
+    }
   })
 }
