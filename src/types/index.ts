@@ -34,3 +34,11 @@ export interface Response {
 }
 
 export interface RequestPromise extends Promise<Response> {}
+
+export interface RequestError extends Error {
+  isRequestError: boolean
+  config: RequestConfig
+  code?: string | null
+  request?: any
+  response?: Response
+}
