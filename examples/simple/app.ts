@@ -1,4 +1,4 @@
-import request from '../../src/index'
+import request from '../../src/request'
 
 request('/simple/get')
 
