@@ -1,5 +1,6 @@
 import { RequestPromise, RequestConfig, Response } from './types'
 import { parseHeaders } from './tools/headers'
+import createError from './tools/error'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
@@ -43,11 +44,11 @@ export default (config: RequestConfig): RequestPromise => {
     }
     // handle network error
     request.onerror = () => {
-      reject(new Error('Network Error'))
+      reject(createError('Network Error', config, undefined, request))
     }
     // handle timeout error
     request.ontimeout = () => {
-      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+      reject(createError(`Timeout of ${timeout} ms exceeded`, config, undefined, request))
     }
     request.send(data)
 
@@ -56,7 +57,7 @@ export default (config: RequestConfig): RequestPromise => {
       if (status >= 200 && status < 300) {
         resolve(response)
       } else {
-        reject(new Error(`Request failed with status code ${status}`))
+        reject(createError(`Request failed with status code ${status}`, config, status, request, response))
       }
     }
   })
