@@ -1,7 +1,7 @@
 import { RequestConfig, RequestPromise, Response } from './types'
-import { buildURL } from './tools/url'
-import { transformRequest, transformResponse } from './tools/data'
-import { processHeaders } from './tools/headers'
+import { buildURL } from './utils/url'
+import { transformRequest, transformResponse } from './utils/data'
+import { processHeaders } from './utils/headers'
 import xhr from './xhr'
 
 function request(config: RequestConfig | string): RequestPromise {

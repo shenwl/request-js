@@ -1,6 +1,6 @@
 import { RequestPromise, RequestConfig, Response } from './types'
-import { parseHeaders } from './tools/headers'
-import createError from './tools/error'
+import { parseHeaders } from './utils/headers'
+import createError from './utils/error'
 
 export default (config: RequestConfig): RequestPromise => {
   return new Promise((resolve, reject) => {
