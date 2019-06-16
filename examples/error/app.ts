@@ -17,5 +17,7 @@ request({
 }).then(res => {
   console.log(res)
 }).catch((e) => {
-  console.log(e)
+  console.log('error message: ', e.message)
+  console.log('error config: ', e.config)
+  console.log('error request: ', e.request)
 })
