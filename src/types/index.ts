@@ -15,7 +15,7 @@ export type Method =
   | 'PATCH'
 
 export interface RequestConfig {
-  url: string
+  url?: string
   method?: Method
   data?: any
   params?: any
@@ -41,4 +41,21 @@ export interface RequestError extends Error {
   code?: string | null
   request?: any
   response?: Response
+}
+
+export interface Request {
+  request(config: RequestConfig): RequestPromise
+
+  get(url: string, config?: RequestConfig): RequestPromise
+  delete(url: string, config?: RequestConfig): RequestPromise
+  head(url: string, config?: RequestConfig): RequestPromise
+  options(url: string, config?: RequestConfig): RequestPromise
+
+  post(url: string, data?: any, config?: RequestConfig): RequestPromise
+  put(url: string, data?: any, config?: RequestConfig): RequestPromise
+  patch(url: string, data?: any, config?: RequestConfig): RequestPromise
+}
+
+export interface RequestInstance extends Request {
+  (config: RequestConfig): RequestPromise
 }
