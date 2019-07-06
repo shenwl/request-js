@@ -1,10 +1,10 @@
-import { RequestConfig, RequestPromise, Response } from './types'
-import { buildURL } from './utils/url'
-import { transformRequest, transformResponse } from './utils/data'
-import { processHeaders } from './utils/headers'
-import xhr from './xhr'
+import { RequestConfig, RequestPromise, Response } from '../types'
+import { buildURL } from '../utils/url'
+import { transformRequest, transformResponse } from '../utils/data'
+import { processHeaders } from '../utils/headers'
+import xhr from '../xhr'
 
-function request(config: RequestConfig | string): RequestPromise {
+export default function dispatchRequest(config: RequestConfig | string): RequestPromise {
   if (typeof config === 'string') {
     return xhr({ url: config })
   } else {
@@ -43,5 +43,3 @@ function transformHeaders(config: RequestConfig): any {
   const { data, headers = {} } = config
   return processHeaders(headers, data)
 }
-
-export default request
