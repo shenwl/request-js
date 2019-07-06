@@ -26,7 +26,7 @@ function processConfig(config: RequestConfig): RequestConfig {
 
 function transformURL(config: RequestConfig): string {
   const { url, params } = config
-  return buildURL(url, params)
+  return buildURL(url!, params)
 }
 
 function transformRequestData(config: RequestConfig): any {

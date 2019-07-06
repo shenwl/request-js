@@ -16,7 +16,7 @@ export default (config: RequestConfig): RequestPromise => {
       request.timeout = timeout
     }
 
-    request.open(method.toUpperCase(), url, true)
+    request.open(method.toUpperCase(), url!, true)
     Object.entries(headers).forEach(([name, value]) => {
       if (data === null && name.toLowerCase() === 'content-type') {
         delete headers[name]
