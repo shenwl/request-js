@@ -24,8 +24,8 @@ export interface RequestConfig {
   timeout?: number
 }
 
-export interface Response {
-  data: any
+export interface Response<T=any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -33,7 +33,7 @@ export interface Response {
   request: any
 }
 
-export interface RequestPromise extends Promise<Response> {}
+export interface RequestPromise<T=any> extends Promise<Response<T>> {}
 
 export interface RequestError extends Error {
   isRequestError: boolean
@@ -44,20 +44,20 @@ export interface RequestError extends Error {
 }
 
 export interface Request {
-  request(config: RequestConfig): RequestPromise
+  request<T=any>(config: RequestConfig): RequestPromise<T>
 
-  get(url: string, config?: RequestConfig): RequestPromise
-  delete(url: string, config?: RequestConfig): RequestPromise
-  head(url: string, config?: RequestConfig): RequestPromise
-  options(url: string, config?: RequestConfig): RequestPromise
+  get<T=any>(url: string, config?: RequestConfig): RequestPromise<T>
+  delete<T=any>(url: string, config?: RequestConfig): RequestPromise<T>
+  head<T=any>(url: string, config?: RequestConfig): RequestPromise<T>
+  options<T=any>(url: string, config?: RequestConfig): RequestPromise<T>
 
-  post(url: string, data?: any, config?: RequestConfig): RequestPromise
-  put(url: string, data?: any, config?: RequestConfig): RequestPromise
-  patch(url: string, data?: any, config?: RequestConfig): RequestPromise
+  post<T=any>(url: string, data?: any, config?: RequestConfig): RequestPromise<T>
+  put<T=any>(url: string, data?: any, config?: RequestConfig): RequestPromise<T>
+  patch<T=any>(url: string, data?: any, config?: RequestConfig): RequestPromise<T>
 }
 
 export interface RequestInstance extends Request {
-  (config: RequestConfig): RequestPromise
+  <T=any>(config: RequestConfig): RequestPromise<T>
 
-  (url: string, config?: RequestConfig): RequestPromise
+  <T=any>(url: string, config?: RequestConfig): RequestPromise<T>
 }
