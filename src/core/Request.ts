@@ -2,7 +2,15 @@ import { RequestPromise, RequestConfig, Method } from '../types'
 import dispatchRequest from './dispatchRequest'
 
 export default class Request {
-  request(config: RequestConfig | string): RequestPromise {
+  request(url: any, config?: any): RequestPromise {
+    if (typeof url === 'string') {
+      if(!config) {
+        config = {}
+      }
+      config.url = url
+    } else {
+      config = url
+    }
     return dispatchRequest(config)
   }
 

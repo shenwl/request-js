@@ -44,7 +44,7 @@ export interface RequestError extends Error {
 }
 
 export interface Request {
-  request(config: RequestConfig | string): RequestPromise
+  request(config: RequestConfig): RequestPromise
 
   get(url: string, config?: RequestConfig): RequestPromise
   delete(url: string, config?: RequestConfig): RequestPromise
@@ -57,5 +57,7 @@ export interface Request {
 }
 
 export interface RequestInstance extends Request {
-  (config: RequestConfig | string): RequestPromise
+  (config: RequestConfig): RequestPromise
+
+  (url: string, config?: RequestConfig): RequestPromise
 }
