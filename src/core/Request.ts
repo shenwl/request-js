@@ -2,7 +2,7 @@ import { RequestPromise, RequestConfig, Method } from '../types'
 import dispatchRequest from './dispatchRequest'
 
 export default class Request {
-  request(config: RequestConfig): RequestPromise {
+  request(config: RequestConfig | string): RequestPromise {
     return dispatchRequest(config)
   }
 
